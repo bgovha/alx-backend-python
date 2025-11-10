@@ -4,7 +4,24 @@
 This test module verifies the behavior of access_nested_map,
 get_json and the memoize decorator.
 """
-from parameterized import parameterized
+try:
+    from parameterized import parameterized
+except Exception:
+    # Minimal fallback for parameterized.expand([...]) using unittest.subTest
+    class _parameterized:
+        @staticmethod
+        def expand(params_list):
+            def decorator(func):
+                def wrapper(self, *args, **kwargs):
+                    for params in params_list:
+                        with self.subTest(params=params):
+                            if isinstance(params, tuple):
+                                func(self, *params)
+                            else:
+                                func(self, params)
+                return wrapper
+            return decorator
+    parameterized = _parameterized
 import unittest
 from unittest.mock import patch, Mock
 
