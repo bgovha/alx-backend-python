@@ -2,8 +2,14 @@
 """Unit tests for utils.access_nested_map"""
 
 import unittest
-from parameterized import parameterized
-from utils import access_nested_map
+from parameterized import parameterized, parameterized_class
+from utils import access_nested_map, get_json, memoize
+from unittest.mock import patch
+from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
+
+
+
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -41,15 +47,8 @@ class TestAccessNestedMap(unittest.TestCase):
         # Check the exception message contains the expected key
         self.assertEqual(str(context.exception), f"'{expected_key}'")
         
-        #!/usr/bin/env python3
+#!/usr/bin/env python3
 """Unit tests for utils.get_json"""
-
-import unittest
-from unittest.mock import patch, Mock
-from parameterized import parameterized
-from utils import get_json
-
-
 class TestGetJson(unittest.TestCase):
     """Test cases for get_json function"""
     
@@ -85,15 +84,8 @@ class TestGetJson(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
     
-    
-    
 #!/usr/bin/env python3
 """Unit tests for utils.memoize"""
-
-import unittest
-from unittest.mock import patch
-from utils import memoize
-
 
 class TestMemoize(unittest.TestCase):
     """Test cases for memoize decorator"""
@@ -136,12 +128,6 @@ if __name__ == "__main__":
     
 #!/usr/bin/env python3
 """Unit tests for client.GithubOrgClient"""
-
-import unittest
-from unittest.mock import patch
-from parameterized import parameterized
-from client import GithubOrgClient
-
 
 class TestGithubOrgClient(unittest.TestCase):
     """Test cases for GithubOrgClient class"""
@@ -270,13 +256,6 @@ class TestGithubOrgClient(unittest.TestCase):
         
 #!/usr/bin/env python3
 """Integration tests for client.GithubOrgClient"""
-
-import unittest
-from unittest.mock import patch
-from parameterized import parameterized_class
-from client import GithubOrgClient
-from fixtures import TEST_PAYLOAD
-
 
 @parameterized_class(
     ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
