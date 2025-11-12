@@ -14,7 +14,8 @@ class User(AbstractUser):
         primary_key=True,
         default=uuid.uuid4,
         editable=False,
-        db_index=True 
+        db_index=True,
+        password=True
     )
     
     first_name = models.CharField(max_length=150, null=False, blank=False)
