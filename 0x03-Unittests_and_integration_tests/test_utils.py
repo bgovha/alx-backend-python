@@ -8,13 +8,9 @@ from unittest.mock import patch
 from client import GithubOrgClient
 from fixtures import TEST_PAYLOAD
 
-
-
-
-
 class TestAccessNestedMap(unittest.TestCase):
     """Test cases for access_nested_map function"""
-    
+
     @parameterized.expand([
         # (nested_map, path, expected_result)
         ({"a": 1}, ("a",), 1),
@@ -83,7 +79,7 @@ class TestGetJson(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-    
+   
 #!/usr/bin/env python3
 """Unit tests for utils.memoize"""
 
