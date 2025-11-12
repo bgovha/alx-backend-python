@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-2j0r9c3h65+jk3uh&t@^v!6p@mdcvkpgqdq$emo(zpo03p#g=e
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'chats.User'
 
 # Application definition
 
@@ -122,3 +122,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    # 1. DEFAULT AUTHENTICATION
+    # Tells DRF how to identify the user (e.g., via session cookie)
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        # You might add TokenAuthentication here later
+    ],
+
+    # 2. DEFAULT PERMISSION
+    # Sets the default access rule for all views (e.g., must be logged in)
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        # You might use IsAuthenticatedOrReadOnly for public reads
+    ]
+}
