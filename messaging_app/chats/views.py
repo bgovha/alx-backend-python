@@ -50,7 +50,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         
         # Set the sender to the current user (in a real app, this would be the authenticated user)
-        # For now, we'll use the first user as a placeholder
+        # For now, we'll use the first user as a placeholder filters
         if not User.objects.exists():
             # Create a default user if none exists
             default_user = User.objects.create(
