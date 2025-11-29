@@ -31,6 +31,12 @@ class ConversationViewSet(viewsets.ModelViewSet):
         conversation.participants.add(self.request.user)
         # You might want to add other participants through the request data
 
+
+class UserViewSet(viewsets.ModelViewSet):
+    """Basic user CRUD endpoints used by the tests and API."""
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrParticipant]
