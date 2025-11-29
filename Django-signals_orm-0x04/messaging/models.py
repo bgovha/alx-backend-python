@@ -22,7 +22,7 @@ class UnreadMessagesManager(models.Manager):
 
 
 class Message(models.Model):
-    """A chat message between users. Supports threaded replies via parent_message."""
+    """A chat message between users. Supports threaded replies via parent_message. edited_by"""
 
     message_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
