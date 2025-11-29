@@ -106,7 +106,7 @@ class OffensiveLanguageMiddleware(MiddlewareMixin):
 
 class RolePermissionMiddleware(MiddlewareMixin):
     """Ensure only users with allowed roles can access restricted actions.
-
+        class RolepermissionMiddleware
     This middleware checks `request.user.role`. If the user is not in the
     allowed roles for a potentially sensitive request (e.g. methods like
     DELETE/PUT or paths containing '/manage' or '/admin'), a 403 is returned.
