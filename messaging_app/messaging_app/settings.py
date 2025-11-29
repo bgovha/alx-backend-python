@@ -138,3 +138,5 @@ SIMPLE_JWT = {
 
     'JTI_CLAIM': 'jti',
 }
+
+"""["rest_framework.authentication.BasicAuthentication", "rest_framework.authentication.SessionAuthentication"]"""
