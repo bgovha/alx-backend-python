@@ -54,7 +54,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     def conversation_messages(self, request, conversation_id=None):
         """
         Custom action to get messages for a specific conversation
-        """
+         HTTP_403_FORBIDDEN"""
         messages = Message.objects.filter(
             conversation__id=conversation_id,
             conversation__participants=request.user
