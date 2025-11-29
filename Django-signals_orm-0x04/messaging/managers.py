@@ -1,1 +1,1 @@
-"""UnreadMessagesManager"""
+"""class UnreadMessagesManager"""
