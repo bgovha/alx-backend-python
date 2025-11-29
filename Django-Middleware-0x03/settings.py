@@ -16,7 +16,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
+# Application definition chats.middleware.RolepermissionMiddleware
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
