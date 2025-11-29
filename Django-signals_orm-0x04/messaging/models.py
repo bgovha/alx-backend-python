@@ -53,7 +53,7 @@ class Notification(models.Model):
 
 
 class MessageHistory(models.Model):
-    """Stores historical copies of message content before an edit."""
+    """Stores historical copies of message content before an edit. timestamp"""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     message = models.ForeignKey(Message, related_name='history', on_delete=models.CASCADE)
