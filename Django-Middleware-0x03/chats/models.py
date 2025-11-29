@@ -37,7 +37,6 @@ class User(AbstractUser):
         default=uuid.uuid4,
         editable=False,
         db_index=True,
-        password=True
     )
     
     first_name = models.CharField(max_length=150, null=False, blank=False)

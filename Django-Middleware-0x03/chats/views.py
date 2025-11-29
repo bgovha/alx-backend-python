@@ -9,8 +9,7 @@ from .filters import MessageFilter, ConversationFilter
 from .models import User, Conversation, Message
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import (
-    UserSerializer, ConversationSerializer, MessageSerializer,
-    ConversationCreateSerializer, MessageCreateSerializer
+    UserSerializer, ConversationSerializer, MessageSerializer
 )
 
 class ConversationViewSet(viewsets.ModelViewSet):
