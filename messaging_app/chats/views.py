@@ -1,14 +1,77 @@
 # Create your views here.
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from .permissions import IsParticipantOfConversation, IsOwnerOrParticipant
+from .pagination import MessagePagination
+from .filters import MessageFilter, ConversationFilter
 from .models import User, Conversation, Message
+from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import (
     UserSerializer, ConversationSerializer, MessageSerializer,
     ConversationCreateSerializer, MessageCreateSerializer
 )
 
+class ConversationViewSet(viewsets.ModelViewSet):
+    serializer_class = ConversationSerializer
+    permission_classes = [permissions.IsAuthenticated, IsParticipantOfConversation]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ConversationFilter
+    
+    def get_queryset(self):
+        """
+        This view should return a list of all conversations
+        where the current user is a participant.
+        """
+        return Conversation.objects.filter(participants=self.request.user)
+    
+    def perform_create(self, serializer):
+        # Automatically add the current user as a participant
+        conversation = serializer.save()
+        conversation.participants.add(self.request.user)
+        # You might want to add other participants through the request data
+
+class MessageViewSet(viewsets.ModelViewSet):
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrParticipant]
+    pagination_class = MessagePagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = MessageFilter
+    
+    def get_queryset(self):
+        """
+        This view should return a list of all messages
+        from conversations where the current user is a participant.
+        """
+        return Message.objects.filter(conversation__participants=self.request.user)
+    
+    def perform_create(self, serializer):
+        # Automatically set the sender to the current user
+        serializer.save(sender=self.request.user)
+    
+    @action(detail=False, methods=['get'])
+    def conversation_messages(self, request, conversation_id=None):
+        """
+        Custom action to get messages for a specific conversation
+        """
+        messages = Message.objects.filter(
+            conversation__id=conversation_id,
+            conversation__participants=request.user
+        )
+        
+        # Apply filtering
+        filtered_messages = self.filterset_class(request.GET, queryset=messages).qs
+        
+        # Apply pagination
+        page = self.paginate_queryset(filtered_messages)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = self.get_serializer(filtered_messages, many=True)
+        return Response(serializer.data)
+"""
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -69,3 +132,4 @@ class MessageViewSet(viewsets.ModelViewSet):
         # Return the message with full details
         full_serializer = MessageSerializer(message)
         return Response(full_serializer.data, status=status.HTTP_201_CREATED)
+        """

@@ -226,4 +226,50 @@ class ConversationSummarySerializer(serializers.ModelSerializer):
             return preview
         return None
     
+    """from rest_framework import serializers
+from .models import Conversation, Message
+from django.contrib.auth.models import User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+
+class MessageSerializer(serializers.ModelSerializer):
+    sender = UserSerializer(read_only=True)
     
+    class Meta:
+        model = Message
+        fields = ['id', 'conversation', 'sender', 'content', 'timestamp', 'read']
+        read_only_fields = ['id', 'sender', 'timestamp']
+
+class ConversationSerializer(serializers.ModelSerializer):
+    participants = UserSerializer(many=True, read_only=True)
+    messages = MessageSerializer(many=True, read_only=True)
+    participant_ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        write_only=True,
+        required=False
+    )
+    
+    class Meta:
+        model = Conversation
+        fields = ['id', 'participants', 'participant_ids', 'messages', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']
+    
+    def create(self, validated_data):
+        participant_ids = validated_data.pop('participant_ids', [])
+        conversation = Conversation.objects.create(**validated_data)
+        
+        # Add participants
+        current_user = self.context['request'].user
+        conversation.participants.add(current_user)
+        
+        for user_id in participant_ids:
+            try:
+                user = User.objects.get(id=user_id)
+                conversation.participants.add(user)
+            except User.DoesNotExist:
+                pass
+        
+        return conversation"""
