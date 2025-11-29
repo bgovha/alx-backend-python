@@ -25,7 +25,7 @@ class IsParticipantOfConversation(permissions.BasePermission):
 
 class IsOwnerOrParticipant(permissions.BasePermission):
     """
-    Permission to only allow owners of an object to edit it or participants to view it.
+    Permission to only allow owners of an object to "PUT", "PATCH", "DELETE it.
     """
     
     def has_object_permission(self, request, view, obj):
