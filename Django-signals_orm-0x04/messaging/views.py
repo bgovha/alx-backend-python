@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Views with basic caching demonstrating cache_page usage for messages list. user.delete()", "delete_user"" sender=request.user  "select_related""
+"""Views with basic caching demonstrating cache_page usage
+for messages list. user.delete()", "delete_user"" sender=request.user  "select_related
+Message.unread.unread_for_user , ".only"
+"""
 from django.views.decorators.cache import cache_page
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
